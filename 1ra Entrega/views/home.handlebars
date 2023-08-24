@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <ul>
+        {{#each products}}
+            <li>
+                {{this.id}} - {{this.title}} - {{this.description}} - ${{this.price}} - {{this.price}} - {{this.description}} - {{this.stock}}
+            </li>
+        {{/each}}
+    </ul>
+</body>
+</html>

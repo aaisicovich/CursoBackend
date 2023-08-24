@@ -1,0 +1,71 @@
+[
+  {
+    "title": "Chaleco Puffer Ebruck Topo 4",
+    "description": "3 cuotas sin interes de $54.330ARS",
+    "price": 58990,
+    "thumbnail": "https://picsum.photos/200/300?random=2",
+    "code": "CHALECO 4",
+    "stock": 18,
+    "id": 2
+  },
+  {
+    "title": "Producto 3",
+    "description": "Descripción del producto 3",
+    "price": 200,
+    "thumbnail": "https://picsum.photos/200/300?random=3",
+    "code": "P4",
+    "stock": 20,
+    "id": 3
+  },
+  {
+    "title": "Producto 4",
+    "description": "Descripción del producto 4",
+    "price": 200,
+    "thumbnail": "https://picsum.photos/200/300?random=4",
+    "code": "P5",
+    "stock": 20,
+    "id": 4
+  },
+  {
+    "title": "Producto 5",
+    "description": "Descripción del producto 5",
+    "price": 200,
+    "thumbnail": "https://picsum.photos/200/300?random=5",
+    "code": "P6",
+    "stock": 20,
+    "id": 5
+  },
+  {
+    "title": "Producto 6",
+    "description": "Descripción del producto 6",
+    "price": 200,
+    "thumbnail": "https://picsum.photos/200/300?random=6",
+    "code": "P7",
+    "stock": 20,
+    "id": 6
+  },
+  {
+    "id": 7,
+    "title": "Chaleco Puffer Ebruck Topo",
+    "description": "3 cuotas sin interes de $12.330ARS",
+    "code": "CHALECO",
+    "price": 36990,
+    "stock": 10
+  },
+  {
+    "id": 8,
+    "title": "Chaleco Puffer Ebruck Topo 3",
+    "description": "3 cuotas sin interes de $14.330ARS",
+    "code": "CHALECO 2",
+    "price": 38990,
+    "stock": 8
+  },
+  {
+    "id": 9,
+    "title": "Chaleco Puffer Ebruck Topo",
+    "description": "3 cuotas sin interes de $12.330ARS",
+    "code": "CHALECO",
+    "price": 36990,
+    "stock": 10
+  }
+]
