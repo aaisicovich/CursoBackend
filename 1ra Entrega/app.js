@@ -15,6 +15,24 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server); 
 
+const dbConnectionString = "mongodb+srv://asd123:<password>@cluster0.nea2e8m.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(dbConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log("Conexión a MongoDB establecida");
+    // Aquí puedes iniciar el servidor de Express
+    app.listen(3000, () => {
+      console.log("Servidor en funcionamiento en el puerto 3000");
+    });
+  })
+  .catch((error) => {
+    console.error("Error al conectar a MongoDB:", error);
+  });
+
+
 let productManager = new ProductManager(io);
 
 io.on('connection', socket => {
