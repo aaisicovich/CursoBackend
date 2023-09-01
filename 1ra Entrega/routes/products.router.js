@@ -6,10 +6,56 @@ const productsRouter = Router();
 const productManager = new ProductManager();
 
 productsRouter.get("/", (req, res) => {
-    const products = productManager.getProducts();
-    let {limit} = req.query;
+    const { limit = 10, page = 1, sort, query } = req.query;
 
-    res.send({products:limit ? products.slice(0, limit) : products});
+    // Obtén todos los productos
+    let products = productManager.getProducts();
+
+    // Filtra según el query si se proporciona
+    if (query) {
+        products = products.filter(product => product.category === query || product.status === query);
+    }
+
+    // Aplica el ordenamiento si se proporciona
+    if (sort === "asc") {
+        products.sort((a, b) => a.price - b.price);
+    } else if (sort === "desc") {
+        products.sort((a, b) => b.price - a.price);
+    }
+
+    // Calcula el índice de inicio y fin para la paginación
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + parseInt(limit);
+
+    // Realiza la paginación
+    const paginatedProducts = products.slice(startIndex, endIndex);
+
+    // Calcula valores para la paginación
+    const totalPages = Math.ceil(products.length / limit);
+    const hasPrevPage = page > 1;
+    const hasNextPage = page < totalPages;
+    const prevPage = hasPrevPage ? page - 1 : null;
+    const nextPage = hasNextPage ? page + 1 : null;
+
+    // Construye los links a las páginas previa y siguiente
+    const prevLink = hasPrevPage ? `/products?page=${prevPage}&limit=${limit}` : null;
+    const nextLink = hasNextPage ? `/products?page=${nextPage}&limit=${limit}` : null;
+
+    // Construye la respuesta
+    const response = {
+        status: "success",
+        payload: paginatedProducts,
+        totalPages: totalPages,
+        prevPage: prevPage,
+        nextPage: nextPage,
+        page: page,
+        hasPrevPage: hasPrevPage,
+        hasNextPage: hasNextPage,
+        prevLink: prevLink,
+        nextLink: nextLink
+    };
+
+    res.status(200).json(response);
 });
 
 productsRouter.get("/:pid", (req, res) => {
