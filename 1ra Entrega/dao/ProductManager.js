@@ -1,197 +1,95 @@
-//const fs = require("fs");
-import fs from "fs";
-import Product from "./models/Product.js";
+import { productModel } from "./models/product.model.js";
 
 class ProductManager {
-  // constructor(io) {
-  //   this.products = [];
-  //   this.path = "Products.json";
-  //   this.createFile();
-  //   this.io = io;
-  // }
-
-  // createFile() {
-  //   if (!fs.existsSync(this.path)) {
-  //     fs.writeFileSync(this.path, JSON.stringify(this.products));
-  //   }
-  // }
-
-  // addProduct(product) {
-  //   if (this.validateCode(product.code)) {
-  //     console.log("Code ya existente");
-
-  //     return false;
-  //   } else {
-  //     const producto = {
-  //       id: this.generateId(),
-  //       title: product.title,
-  //       description: product.description,
-  //       code: product.code,
-  //       price: product.price,
-  //       status: product.status,
-  //       stock: product.stock,
-  //       category: product.category,
-  //       thumbnails: product.thumbnails,
-  //     };
-  //     this.products = this.getProducts();
-  //     this.products.push(producto);
-  //     this.saveProducts();
-  //     //io.emit('productAdded', product);
-  //     console.log("Producto agregado");
-
-  //     return true;
-  //   }
-  // } FileSystem
-  async addProduct(product) {
-    try {
-      if (await this.validateCode(product.code)) {
-        console.log("Code ya existente");
-        return false;
-      } else {
-        await Product.create(product)
-        console.log("Producto agregado");
-        return true;
-      }
-    } catch (error) {
-      return false;
-    }
-
-  }
-
-  // updateProduct(id, product) {
-  //   this.products = this.getProducts();
-  //   let pos = this.products.findIndex((item) => item.id === id);
-
-  //   if (pos > -1) {
-  //     this.products[pos].title = product.title;
-  //     this.products[pos].description = product.description;
-  //     this.products[pos].code = product.code;
-  //     this.products[pos].price = product.price;
-  //     this.products[pos].status = product.status;
-  //     this.products[pos].stock = product.stock;
-  //     this.products[pos].category = product.category;
-  //     this.products[pos].thumbnails = product.thumbnails;
-  //     this.saveProducts();
-  //     console.log("Producto actualizado");
-
-  //     return true;
-  //   } else {
-  //     console.log("No encontrado!");
-
-  //     return false;
-  //   }
-  // } FileSystem
-
-  async updateProduct(id, product) {
-    try {
-      if (this.validateId(id)) {   
-          if (await this.getProductById(id)) {
-              await productModel.updateOne({_id:id}, product);
-              console.log("Product updated!");
-  
-              return true;
-          }
-      }
-      
-      return false;
-  } catch (error) {
-      console.log("Not found!");
-
-      return false;
-  }
-}
-
-  // deleteProduct(id) {
-  //   this.products = this.getProducts();
-  //   let pos = this.products.findIndex((item) => item.id === id);
-
-  //   if (pos > -1) {
-  //     this.products.splice(pos, 1);
-  //     0, 1;
-  //     this.saveProducts();
-  //     //io.emit('productDeleted', id);
-  //     console.log("Producto #" + id + " borrado");
-
-  //     return true;
-  //   } else {
-  //     console.log("No encontrado");
-
-  //     return false;
-  //   }
-  // } FileSystem
-
-
-  async deleteProduct(id) {
-    try {
-        if (this.validateId(id)) {    
-            if (await this.getProductById(id)) {
-                await productModel.deleteOne({_id:id});
-                console.log("Product deleted!");
-
+    async addProduct(product) {
+        try {
+            if (await this.validateCode(product.code)) {
+                console.log("Error! Code exists!");
+    
+                return false;
+            } else {
+                await productModel.create(product)
+                console.log("Product added!");
+    
                 return true;
             }
+        } catch (error) {
+            return false;
         }
-
-        return false;
-    } catch (error) {
-        console.log("Not found!");
-
-        return false;
     }
-}
 
-  // getProducts() {
-  //   let products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
-
-  //   return products;
-  // } FileSystem
-
-  async getProducts(limit) {
-    return await limit ? productModel.find().limit(limit).lean() : productModel.find().lean();
-}
-
-  // getProductById(id) {
-  //   this.products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
-
-  //   return this.products.find((item) => item.id === id) || "No encontrado";
-  // } FileSystem
-  async getProductById(id) {
-    if (this.validateId(id)) {
-        return await productModel.findOne({_id:id}).lean() || null;
-    } else {
-        console.log("Not found!");
+    async updateProduct(id, product) {
+        try {
+            if (this.validateId(id)) {   
+                if (await this.getProductById(id)) {
+                    await productModel.updateOne({_id:id}, product);
+                    console.log("Product updated!");
         
-        return null;
+                    return true;
+                }
+            }
+            
+            return false;
+        } catch (error) {
+            console.log("Not found!");
+    
+            return false;
+        }
     }
-}
 
+    async deleteProduct(id) {
+        try {
+            if (this.validateId(id)) {    
+                if (await this.getProductById(id)) {
+                    await productModel.deleteOne({_id:id});
+                    console.log("Product deleted!");
+    
+                    return true;
+                }
+            }
 
-  // validateCode(code) {
-  //   return this.products.some((item) => item.code === code);
-  // }
-  async validateCode(code) {
-    return await productModel.findOne({code:code}) || false;
-}
+            return false;
+        } catch (error) {
+            console.log("Not found!");
+    
+            return false;
+        }
+    }
 
-  validateId(id) {
-    return id.length === 24 ? true : false;
-}
-  // generateId() {
-  //   let max = 0;
-  //   let products = this.getProducts();
+    async getProducts(params) {
+        let {limit, page, query, sort} = params
+        limit = limit ? limit : 10;
+        page = page ? page : 1;
+        query = query || {};
+        sort = sort ? sort == "asc" ? 1 : -1 : 0;
+        let products = await productModel.paginate(query, {limit:limit, page:page, sort:{price:sort}});
+        let status = products ? "success" : "error";
 
-  //   products.forEach((item) => {
-  //     if (item.id > max) {
-  //       max = item.id;
-  //     }
-  //   });
+        let prevLink = products.hasPrevPage ? "http://localhost:8080/products?limit=" + limit + "&page=" + products.prevPage : null;
+        let nextLink = products.hasNextPage ? "http://localhost:8080/products?limit=" + limit + "&page=" + products.nextPage : null;
+        
+        products = {status:status, payload:products.docs, totalPages:products.totalPages, prevPage:products.prevPage, nextPage:products.nextPage, page:products.page, hasPrevPage:products.hasPrevPage, hasNextPage:products.hasNextPage, prevLink:prevLink, nextLink:nextLink};
 
-  //   return max + 1;
-  // }
+        return products;
+    }
 
-  // saveProducts() {
-  //   fs.writeFileSync(this.path, JSON.stringify(this.products));
-  // }
+    async getProductById(id) {
+        if (this.validateId(id)) {
+            return await productModel.findOne({_id:id}).lean() || null;
+        } else {
+            console.log("Not found!");
+            
+            return null;
+        }
+    }
+
+    validateId(id) {
+        return id.length === 24 ? true : false;
+    }
+
+    async validateCode(code) {
+        return await productModel.findOne({code:code}) || false;
+    }
 }
 
 export default ProductManager;

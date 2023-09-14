@@ -1,4 +1,4 @@
-import { messageModel } from "./models/Messages.js";
+import { messageModel } from "./models/message.model.js";
 
 class ChatManager {
     async getMessages() {
