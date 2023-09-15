@@ -6,6 +6,8 @@ Entregas Backend
 
 1ra Entrega Proyecto Final - Se encuentra en la carpeta 1ra Entrega
 
+Refactorizacion + eliminacion de comentarios innecesarios
+
 Primera practica integradora
 
 Curso de Backend
