@@ -22,7 +22,7 @@ const puerto = 8080;
 //app.use(cookieParser()); 
 app.use(session({
     store:MongoStore.create({
-        mongoUrl:"mongodb+srv://CoderJavier:Javier123!@codercluster.rnwzt3p.mongodb.net/ecommerce?retryWrites=true&w=majority",
+        mongoUrl:"mongodb://localhost:27017/",
         mongoOptions:{useNewUrlParser:true, useUnifiedTopology:true},
         ttl:10000
     }),

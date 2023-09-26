@@ -1,4 +1,3 @@
-//const fs = require("fs");
 import fs from "fs";
 
 class ProductManager {
@@ -98,14 +97,11 @@ class ProductManager {
         });
 
         return max+1;
-        //return this.products.length > 0 ? this.products[this.products.length-1].id+1 : 1;
     }
 
     saveProducts() {
         fs.writeFileSync(this.path, JSON.stringify(this.products));
     }
 }
-
-//module.exports = {ProductManager};
 
 export default ProductManager;

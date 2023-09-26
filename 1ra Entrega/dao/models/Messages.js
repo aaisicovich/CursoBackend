@@ -1,19 +1,8 @@
 import mongoose from "mongoose";
 
-const cartSchema = new mongoose.Schema({
-    products: [
-        {
-          product: {
-            type: String,
-            ref: 'products'
-          },
-          quantity: Number,
-        }
-    ]
+const messageSchema = new mongoose.Schema({
+    user:String,
+    message:String
 });
 
-cartSchema.pre("findOne", function() {
-    this.populate("products.product");
-});
-
-export const cartModel = mongoose.model("carts", cartSchema);
+export const messageModel = mongoose.model("messages", messageSchema);
